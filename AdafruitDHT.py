@@ -55,7 +55,7 @@ while True:
     # If this happens try again!
     if rh is not None and tempC is not None:
         print "Python writing to file!"
-        f.write('"tempF": {{0:0.1f}}, "tempC": {{1:0.1f}}, "rh":{2:0.1f}'.format(tempF, tempC, rh))
+        f.write('{{"tempF": {0:0.1f}, "tempC": {1:0.1f}, "rh":{2:0.1f}}}'.format(tempF, tempC, rh))
     else:
         print('Failed to get reading. Try again!')
     print "Python closing file."
