@@ -53,7 +53,7 @@ while True:
     # the results will be null (because Linux can't
     # guarantee the timing of calls to read the sensor).
     # If this happens try again!
-    if humidity is not None and temperature is not None:
+    if rh is not None and tempC is not None:
         print "Python writing to file!"
         f.write('"tempF": {{0:0.1f}}, "tempC": {{1:0.1f}}, "rh":{2:0.1f}'.format(tempF, tempC, rh))
     else:
