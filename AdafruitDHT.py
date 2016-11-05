@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#This file has been modified by Josh Olds to take one reading per 30 seconds
+#This file has been modified by Josh Olds to take one reading per 30 seconds and write out to file
 import sys
 import time
 
@@ -40,21 +40,25 @@ else:
     sys.exit(1)
 
 while True:
+    print "Python opening file..."
+    f = open('weather.json', 'w')
     # Try to grab a sensor reading.  Use the read_retry method which will retry up
     # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
-    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+    rh, tempC = Adafruit_DHT.read_retry(sensor, pin)
 
     # Un-comment the line below to convert the temperature to Fahrenheit.
-    # temperature = temperature * 9/5.0 + 32
+    tempF = tempC * 9/5.0 + 32
 
     # Note that sometimes you won't get a reading and
     # the results will be null (because Linux can't
     # guarantee the timing of calls to read the sensor).
     # If this happens try again!
     if humidity is not None and temperature is not None:
-        print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+        print "Python writing to file!"
+        f.write('"tempF": {{0:0.1f}}, "tempC": {{1:0.1f}}, "rh":{2:0.1f}'.format(tempF, tempC, rh))
     else:
         print('Failed to get reading. Try again!')
+    print "Python closing file."
     time.sleep(30)
 
 

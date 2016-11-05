@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/resin-io-projects/simple-server-node#readme",
   "dependencies": {
-    "python-shell": "^0.4.0",
     "request": "^2.78.0"
   }
 }
