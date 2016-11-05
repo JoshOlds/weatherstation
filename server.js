@@ -1,15 +1,25 @@
-var express = require('express');
-var app = express();
+/* Single file server to take temperature readings and report them to web API
+Author: Joshua Olds
+*/
 
-// reply to request with "Hello World!"
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+var request = require('request');
 
-//start a server on port 80 and log its start to our console
-var server = app.listen(80, function () {
+var dht = require('beaglebone-dht'),
+sensor = dht.sensor('AM2302'),
+pin = 'P9_15';
 
-  var port = server.address().port;
-  console.log('Example app listening on port ', port);
 
-});
+
+function read(cb){
+    console.log('Attempting to read from sensor on: ' + pin)
+    var reading = dht.read(pin);
+
+    if(reading === undefined){
+        setTimeout(read, 3000);
+    }else{
+        console.log(reading)
+        cb(reading);
+    }
+    return;
+}
+

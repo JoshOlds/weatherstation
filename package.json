@@ -25,6 +25,6 @@
   "homepage": "https://github.com/resin-io-projects/simple-server-node#readme",
   "dependencies": {
     "beaglebone-dht": "0.0.3",
-    "express": "*"
+    "request": "^2.78.0"
   }
 }
