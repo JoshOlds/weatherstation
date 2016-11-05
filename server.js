@@ -3,23 +3,18 @@ Author: Joshua Olds
 */
 
 var request = require('request');
+var PythonShell = require('python-shell');
 
-var dht = require('beaglebone-dht'),
-sensor = dht.sensor('AM2302'),
-pin = 'P9_15';
+var options = {
+  mode: 'text',
+  args: ['2302', 'P9_15']
+};
+
+var script = new PythonShell('test.py')
+
+script.stdout.on('message', function(message){
+    console.log(message);
+})
 
 
-
-function read(cb){
-    console.log('Attempting to read from sensor on: ' + pin)
-    var reading = dht.read(pin);
-
-    if(reading === undefined){
-        setTimeout(read, 3000);
-    }else{
-        console.log(reading)
-        cb(reading);
-    }
-    return;
-}
 
