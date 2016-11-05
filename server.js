@@ -6,6 +6,8 @@ var address = 'https://boiseweather.herokuapp.com/api/weather'
 
 var fs = require('fs');
 var request = require('request');
+var exec = require('child_process').exec;
+
 console.log(`Booting server. Readings will occur once per ${interval} minutes.`)
 
 
@@ -43,6 +45,10 @@ function postData(){
 
 postData();
 console.log(`Waiting till next post for: ${interval} minutes...`)
+
+exec('sudo python AdafruitDHT.py 2302 P9_15');
+console.log(`Python script should now be running...`)
+
 setInterval(postData, interval * 60 * 1000);
 
 
