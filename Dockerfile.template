@@ -30,7 +30,7 @@ ENV INITSYSTEM on
 # Get Adafruit python libraries
 RUN git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 RUN cd Adafruit_Python_DHT && sudo python setup.py install
-RUN python AdafruitDHT.py 2302 P9_15
+RUN sudo python AdafruitDHT.py 2302 P9_15
 
 # server.js will run when container starts up on the device
 CMD ["npm", "start"]
