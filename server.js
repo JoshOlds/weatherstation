@@ -23,7 +23,7 @@ function postData(){
   if(!data.tempF){return console.log("Error reading data file!!!")}
   if(data.init){return console.log("Python hasn't written data yet!")}
   var now = Date.now();
-  var weather = {dateStamp: now, reading: {tempF: data.tempF, tempC: data.tempC, rh: data.rh}}
+  var weather = {dateStamp: now, reading: {tempF: data.tempF, tempC: data.tempC, rh: data.rh, location: {lat: data.location.lat, lon: data.location.lon}}}
 
   var options = {
     method: 'post',
