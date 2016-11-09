@@ -16,9 +16,17 @@ console.log(`Booting server. Readings will occur once per ${interval} minutes.`)
 
 
 function readData(){
-  var data = JSON.parse(fs.readFileSync('./weather.json', 'utf8'));
-  console.log(data)
-  return data;
+  try{
+    var data = JSON.parse(fs.readFileSync('./weather.json', 'utf8'));
+    console.log(data)
+    return data;
+  }
+  catch(err){
+    console.log(err)
+    console.log('Could not read file!')
+    setTimeout(postData, 10000)
+    return {error: 'Could not read file!'}
+  }
 }
 
 function postData(){
