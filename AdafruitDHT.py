@@ -40,25 +40,34 @@ else:
     sys.exit(1)
 
 while True:
-    print "Python opening file..."
-    f = open('weather.json', 'w')
-    # Try to grab a sensor reading.  Use the read_retry method which will retry up
-    # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
-    rh, tempC = Adafruit_DHT.read_retry(sensor, pin)
+    try:
+        print "Python opening file..."
+        f = open('weather.json', 'w')
+        # Try to grab a sensor reading.  Use the read_retry method which will retry up
+        # to 15 times to get a sensor reading (waiting 2 seconds between each retry).
+        rh, tempC = Adafruit_DHT.read_retry(sensor, pin)
 
-    # Un-comment the line below to convert the temperature to Fahrenheit.
-    tempF = tempC * 9/5.0 + 32
+        # Un-comment the line below to convert the temperature to Fahrenheit.
+        tempF = tempC * 9/5.0 + 32
 
-    # Note that sometimes you won't get a reading and
-    # the results will be null (because Linux can't
-    # guarantee the timing of calls to read the sensor).
-    # If this happens try again!
-    if rh is not None and tempC is not None:
-        print "Python writing to file!"
-        f.write('{{"tempF": {0:0.1f}, "tempC": {1:0.1f}, "rh":{2:0.1f}, "location": {{"lat": 43.60007449999999, "lon": -116.23737749999998}}}}'.format(tempF, tempC, rh))
-    else:
-        print('Failed to get reading. Try again!')
-    print "Python closing file."
+        #Random stamp for comparison
+        signature = random.random()
+
+        # Note that sometimes you won't get a reading and
+        # the results will be null (because Linux can't
+        # guarantee the timing of calls to read the sensor).
+        # If this happens try again!
+        if rh is not None and tempC is not None:
+            print "Python writing to file!"
+            f.write('{{"tempF": {0:0.1f}, "tempC": {1:0.1f}, "rh":{2:0.1f}, "location": {{"lat": 43.60007449999999, "lon": -116.23737749999998}}, "signature":{3}}}'.format(tempF, tempC, rh, signature))
+        else:
+            print('Failed to get reading. Try again!')
+        print "Python closing file."
+        f.close()
+    except Exception:
+        print "Exception!"
+        print Exception
+        pass
     time.sleep(30)
 
 
