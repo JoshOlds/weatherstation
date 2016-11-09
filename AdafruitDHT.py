@@ -23,6 +23,7 @@
 #This file has been modified by Josh Olds to take one reading per 30 seconds and write out to file
 import sys
 import time
+import random
 
 import Adafruit_DHT
 
