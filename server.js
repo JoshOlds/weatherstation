@@ -7,6 +7,7 @@ var address = 'https://boiseweather.herokuapp.com/api/weather'
 var fs = require('fs');
 var request = require('request');
 var exec = require('child_process').exec;
+var childRunningFlag = false;
 
 console.log(`Booting server. Readings will occur once per ${interval} minutes.`)
 
@@ -18,6 +19,16 @@ function readData(){
 }
 
 function postData(){
+  if(!childRunningFlag){ //If Python is not running. boot it, and wait 10 seconds.
+    exec('sudo python AdafruitDHT.py 2302 P9_15', (stdout) =>{
+      childRunningFlag = false; //If python script exits, set running flag back to false
+    });
+    console.log(`Python script not running, booting now!`)
+    childRunningFlag = true;
+    setTimeout(postData, 10000);
+    return;
+  }
+
   console.log(`Reading data...`)
   var data = readData();
   if(!data.tempF){return console.log("Error reading data file!!!")}
@@ -45,10 +56,6 @@ function postData(){
 
 postData();
 console.log(`Waiting till next post for: ${interval} minutes...`)
-
-exec('sudo python AdafruitDHT.py 2302 P9_15');
-console.log(`Python script should now be running...`)
-
 setInterval(postData, interval * 60 * 1000);
 
 
